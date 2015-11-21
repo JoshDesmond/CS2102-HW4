@@ -1,10 +1,15 @@
 
 class MaxHzReport {
-  int day;
-  double maxReading;
+	int day;
+	double maxReading;
 
-  MaxHzReport(int day, double maxread) {
-    this.day = day;
-    this.maxReading = maxread;
-  }
+	/**
+	 * 
+	 * @param day integer
+	 * @param maxread maximum read for the day
+	 */
+	MaxHzReport(final int day, final double maxread) {
+		this.day = day;
+		this.maxReading = maxread;
+	}
 }
