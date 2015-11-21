@@ -14,7 +14,7 @@ class DataSmooth2 implements IDataSmoothProbs {
     {
       average.add(t.average());
     }
-    return average; 
+    return average;
   }
 
   private void toTriples(LinkedList<PHR> phrs, LinkedList<TripleNum> triples) {
@@ -24,7 +24,7 @@ class DataSmooth2 implements IDataSmoothProbs {
       {
         triples.add(new TripleNum(phrs.get(i).heartRate, phrs.get(i).heartRate, phrs.get(i).heartRate));
       }
-      if(i == phrs.size()-1)
+      else if(i == phrs.size()-1)
       {
         triples.add(new TripleNum(phrs.get(i).heartRate, phrs.get(i).heartRate, phrs.get(i).heartRate));
       }
