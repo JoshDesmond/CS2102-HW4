@@ -1,12 +1,14 @@
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import tester.TestMethod;
 import tester.Tester;
 
 class EarthquakeExamples {
 	IEarthquakeProbs E;
 
 	private LinkedList<Double> data = getSensorData();
+	private LinkedList<MaxHzReport> out10 = getOutputData10();
 
 	EarthquakeExamples(final IEarthquakeProbs E) {
 		this.E = E;
@@ -16,12 +18,19 @@ class EarthquakeExamples {
 		return t.checkExpect(E.dailyMaxForMonth(null, 0), null);
 	}
 
-	/*
-	 * 20151004 200 150 175 20151005 0.002 0.03 20151007, 1, 3, 20151103, 2, 4,
-	 * 20151104, .5, .4, .505,
-	 */
+	@TestMethod
+	public boolean testEarthquake(final Tester t) {
+		return t.checkExpect(E.dailyMaxForMonth(getSensorData(), 10), getOutputData10());
+	}
 
-	public static LinkedList<Double> getSensorData() {
+	@TestMethod
+	public boolean testEarthqueak2(final Tester t) {
+		return t.checkExpect(E.dailyMaxForMonth(getSensorData(), 5), getOutputData5());
+	}
+
+
+
+	private static LinkedList<Double> getSensorData() {
 		// @formatter:off
 		final LinkedList<Double> data = new LinkedList<Double>(
 				Arrays.asList(
@@ -37,4 +46,32 @@ class EarthquakeExamples {
 
 		return data;
 	}
+
+	/**
+	 * Get output data if the input to function is 10, or october
+	 */
+	private static LinkedList<MaxHzReport> getOutputData10() {
+		final LinkedList<MaxHzReport> data = new LinkedList<MaxHzReport>();
+
+		data.add(new MaxHzReport(04, 200.0));
+		data.add(new MaxHzReport(05, 0.03));
+		data.add(new MaxHzReport(07, 3.0));
+
+		return data;
+	}
+
+	/**
+	 * Get output data if the input to function is 5, or May
+	 */
+	private static LinkedList<MaxHzReport> getOutputData5() {
+		final LinkedList<MaxHzReport> data = new LinkedList<MaxHzReport>();
+
+		data.add(new MaxHzReport(8, 100.));
+		data.add(new MaxHzReport(9, 100.));
+
+		return data;
+	}
+
+
+
 }
