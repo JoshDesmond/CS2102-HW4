@@ -4,6 +4,7 @@ import java.util.*;
 class MostFrequentWords1 implements IFreqWordsProbs {
     MostFrequentWords1(){}
 
+    //Data Cleaning: Turn in to a map of word counts, hold both WordCount, which holds word and count. Find max 3 in that list
     public LinkedList<String> frequentWords(LinkedList<String> words) {
         Map<String, ICount> uniq = getUniq(words);
 
@@ -16,7 +17,6 @@ class MostFrequentWords1 implements IFreqWordsProbs {
         ICount max = new EmptyCount();
         ICount min = new EmptyCount();
         ICount med = new EmptyCount();
-        System.out.println(uniq.values());
         for(ICount current : uniq.values())
         {
             if(current.count() >= min.count())
