@@ -1,4 +1,5 @@
 
+import java.util.Arrays;
 import java.util.LinkedList;
 
 class MostFrequentWords2 implements IFreqWordsProbs {
@@ -21,7 +22,31 @@ class MostFrequentWords2 implements IFreqWordsProbs {
     {
       if(!s.equals(curString))
       {
-        //swap swap etc
+        if(curCount > minCount || (curCount == minCount && curString.length() < minString.length()))
+        {
+          minCount = curCount;
+          minString = curString;
+        }
+
+        if(curCount> medCount || (curCount == medCount && curString.length() < medString.length()))
+        {
+          minCount = medCount;
+          minString = medString;
+
+          medString = curString;
+          medCount = curCount;
+        }
+
+        if(curCount> maxCount || (curCount == maxCount && curString.length() < maxString.length()))
+        {
+
+
+          medString = maxString;
+          medCount = maxCount;
+
+          maxString = curString;
+          maxCount = curCount;
+        }
         curString = s;
         curCount =1;
 
@@ -29,6 +54,32 @@ class MostFrequentWords2 implements IFreqWordsProbs {
       else
         curCount +=1;
     }
-  return null;
+    if(curCount > minCount || (curCount == minCount && curString.length() < minString.length()))
+    {
+      minCount = curCount;
+      minString = curString;
+    }
+
+    if(curCount> medCount || (curCount == medCount && curString.length() < medString.length()))
+    {
+      minCount = medCount;
+      minString = medString;
+
+      medString = curString;
+      medCount = curCount;
+    }
+
+    if(curCount> maxCount || (curCount == maxCount && curString.length() < maxString.length()))
+    {
+
+
+      medString = maxString;
+      medCount = maxCount;
+
+      maxString = curString;
+      maxCount = curCount;
+    }
+
+  return new LinkedList<String>(Arrays.asList(maxString, medString,minString));
   }
 }
