@@ -14,22 +14,21 @@ class EarthquakeExamples {
 		this.E = E;
 	}
 
-	boolean testFoo(final Tester t) {
-		return t.checkExpect(E.dailyMaxForMonth(null, 0), null);
-	}
-
 	@TestMethod
 	public boolean testEarthquake(final Tester t) {
-		return t.checkExpect(E.dailyMaxForMonth(getSensorData(), 10), getOutputData10());
+		return t.checkExpect(E.dailyMaxForMonth(data, 10),
+				out10);
 	}
 
 	@TestMethod
 	public boolean testEarthqueak2(final Tester t) {
-		return t.checkExpect(E.dailyMaxForMonth(getSensorData(), 5), getOutputData5());
+		return t.checkExpect(E.dailyMaxForMonth(data, 5),
+				out10);
 	}
 
-
-
+	/**
+	 * Get input data
+	 */
 	private static LinkedList<Double> getSensorData() {
 		// @formatter:off
 		final LinkedList<Double> data = new LinkedList<Double>(
@@ -71,7 +70,5 @@ class EarthquakeExamples {
 
 		return data;
 	}
-
-
 
 }

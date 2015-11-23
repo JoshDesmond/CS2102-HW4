@@ -1,64 +1,61 @@
-import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.ListIterator;
-import java.util.Map;
 
+/**
+ * This solution works by first creating a data structure which indexes all
+ * MaxHzReports, then retrieving the MaxHz report for just the required month.
+ * 
+ * @author Josh Desmond
+ */
 class Earthquake2 implements IEarthquakeProbs {
 	Earthquake2() {
 	}
 
-	private Map<Integer, LinkedList<MaxHzReport>> reportsByMonth = instantiateMap();
-
 	@Override
 	public LinkedList<MaxHzReport> dailyMaxForMonth(
 			final LinkedList<Double> data, final int month) {
+
 		if (data.isEmpty()) {
 			return new LinkedList<MaxHzReport>();
 		}
 
-		processData(data);
-		return getMonthlyData(month);
-	}
-
-	private LinkedList<MaxHzReport> getMonthlyData(final int month) {
+		EarthquakeReportsByMonth reportsByMonth = convertToReportsByMonthMap(data);
 		return reportsByMonth.get(month);
 	}
 
-	private void processData(final LinkedList<Double> data) {
-		// Go through data, building list for each month
-		final ListIterator<Double> i = data.listIterator();
-		LinkedList<Double> currentList = null;
+	/**
+	 * Converts a sensorData list input to an indexed map of month ->
+	 * MaxHzReport
+	 * 
+	 * @param sensorData
+	 *            raw input data
+	 * @return A Map of int month to MaxHzReports
+	 */
+	public EarthquakeReportsByMonth convertToReportsByMonthMap(
+			final LinkedList<Double> sensorData) {
+		// Instantiate reportsByMonth
+		EarthquakeReportsByMonth reportsByMonth = EarthquakeReportsByMonth.instantiateMap();
 
-		Double d;
-		do {
-			d = i.next();
-			if (isOfTypeDate(d)) {
-				currentList = new LinkedList<Double>();
-				reportsByMonth.put(monthOfDate(d), currentList);
-			}
+		// First split data in days.
+		LinkedList<LinkedList<Double>> splitData = splitLists(sensorData);
 
-			else if (isOfTypeFreq(d)) {
-				currentList.add(d);
-			}
-		} while (i.hasNext());
-
-	}
-
-	private Integer monthOfDate(final Double d) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	// Builds map of integer -> list<report>
-	private Map<Integer, LinkedList<MaxHzReport>> instantiateMap() {
-		final HashMap<Integer, LinkedList<MaxHzReport>> map = new HashMap<Integer, LinkedList<MaxHzReport>>(
-				12);
-		for (int i = 1; i <= 12; i++) {
-			map.put(i, new LinkedList<MaxHzReport>());
+		// Then, for each day, add it to the growing reportsByMonth.
+		for (LinkedList<Double> dailyReadings : splitData) {
+			reportsByMonth.processDailyData(dailyReadings);
 		}
 
-		return map;
+		// Return data.
+		return reportsByMonth;
 	}
+
+	private LinkedList<LinkedList<Double>> splitLists(
+			LinkedList<Double> sensorData) {
+		// Split data into list of lists, one list of doubles for each day.
+		final ListIterator<Double> i = data.listIterator();
+		LinkedList<Double> currentList;
+	}
+
+
 
 	/**
 	 * Converts a double in the form yyyymmdd to a integer representing day
@@ -101,4 +98,5 @@ class Earthquake2 implements IEarthquakeProbs {
 	private static boolean isOfTypeFreq(final double sensorValue) {
 		return ((0.0 <= sensorValue) || (sensorValue <= 500.0));
 	}
+
 }
