@@ -11,7 +11,7 @@ class DataSmooth1 implements IDataSmoothProbs {
     changes.add(new Double(original.get(0)));
     for (int i = 1; i < original.size() -1; i++) {
       Integer ints = original.get(i);
-        changes.set(i, average(original.get(i-1) ,original.get(i), original.get(i+1)));
+        changes.add(i, average(original.get(i-1) ,original.get(i), original.get(i+1)));
     }
     changes.add(new Double(original.get(original.size()-1)));
     return changes;
