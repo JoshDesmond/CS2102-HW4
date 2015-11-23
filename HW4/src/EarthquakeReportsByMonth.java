@@ -25,8 +25,8 @@ HashMap<Integer, LinkedList<MaxHzReport>> {
 	public void processDailyData(LinkedList<Double> dailyData) {
 		// Parse first value
 		double dateDouble = dailyData.pop();
-		int day = dayOfDate(dateDouble);
-		int month = monthOfDate(dateDouble);
+		int day = EarthquakeUtils.dayOfDate(dateDouble);
+		int month = EarthquakeUtils.monthOfDate(dateDouble);
 
 		// Find best
 		double maxRead = 0.0;
@@ -58,20 +58,6 @@ HashMap<Integer, LinkedList<MaxHzReport>> {
 		}
 
 		return map;
-	}
-
-	/**
-	 * Converts a double in the form yyyymmdd to a integer representing month
-	 */
-	private static int monthOfDate(final Double d) {
-		return (int) ((d % 10000) - (d % 100)) / 100;
-	}
-
-	/**
-	 * Converts a double in the form yyyymmdd to a integer representing day
-	 */
-	private static int dayOfDate(final Double dataValue) {
-		return (int) (dataValue % 100);
 	}
 
 	@Override
