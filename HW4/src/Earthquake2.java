@@ -1,5 +1,4 @@
 import java.util.LinkedList;
-import java.util.ListIterator;
 
 /**
  * This solution works by first creating a data structure which indexes all
@@ -20,6 +19,8 @@ class Earthquake2 implements IEarthquakeProbs {
 		}
 
 		EarthquakeReportsByMonth reportsByMonth = convertToReportsByMonthMap(data);
+
+		System.out.println(reportsByMonth.toString());
 		return reportsByMonth.get(month);
 	}
 
@@ -34,9 +35,10 @@ class Earthquake2 implements IEarthquakeProbs {
 	public EarthquakeReportsByMonth convertToReportsByMonthMap(
 			final LinkedList<Double> sensorData) {
 		// Instantiate reportsByMonth
-		EarthquakeReportsByMonth reportsByMonth = EarthquakeReportsByMonth.instantiateMap();
+		EarthquakeReportsByMonth reportsByMonth = EarthquakeReportsByMonth
+				.instantiateMap();
 
-		// First split data in days.
+		// split data in days.
 		LinkedList<LinkedList<Double>> splitData = splitLists(sensorData);
 
 		// Then, for each day, add it to the growing reportsByMonth.
@@ -48,20 +50,38 @@ class Earthquake2 implements IEarthquakeProbs {
 		return reportsByMonth;
 	}
 
+	/**
+	 * Converts raw sensor data into split data
+	 * 
+	 * @return Builds lists of daily reading lists. Each list within total list
+	 *         will begin with a date.
+	 */
 	private LinkedList<LinkedList<Double>> splitLists(
 			LinkedList<Double> sensorData) {
-		// Split data into list of lists, one list of doubles for each day.
-		final ListIterator<Double> i = data.listIterator();
-		LinkedList<Double> currentList;
-	}
+		// Set up iterator
+		LinkedList<LinkedList<Double>> splitList = new LinkedList<LinkedList<Double>>();
+		LinkedList<Double> currentList = new LinkedList<Double>();
 
+		currentList.add(sensorData.pop());
 
+		while (!sensorData.isEmpty()) {
+			Double peek = sensorData.peek();
 
-	/**
-	 * Converts a double in the form yyyymmdd to a integer representing day
-	 */
-	private static int dayOfDate(final Double dataValue) {
-		return (int) (dataValue % 100);
+			if (isOfTypeDate(peek)) {
+				// Then terminate currentList and start anew.
+				splitList.add(currentList);
+				currentList = new LinkedList<Double>();
+			} else if (!isOfTypeFreq(peek)) {
+				throw new IllegalArgumentException(String.format(
+						"Given argument within sensor data list was neither of type "
+								+ "frequency nor date: %s", peek));
+			}
+
+			currentList.add(sensorData.pop());
+		}
+
+		splitList.add(currentList);
+		return splitList;
 	}
 
 	/**
@@ -71,9 +91,9 @@ class Earthquake2 implements IEarthquakeProbs {
 	 *            double found in the sensor output
 	 * @return true if the double is in the form yyyymmdd
 	 */
-	private static boolean isOfTypeDate(final Double sensorValue) {
+	public static boolean isOfTypeDate(final Double sensorValue) {
 
-		if (sensorValue % 1 == 0)
+		if (sensorValue % 1 != 0)
 			return false;
 
 		if (19000000 > sensorValue || sensorValue > 100000000) {
@@ -95,7 +115,7 @@ class Earthquake2 implements IEarthquakeProbs {
 	 *            double found in the sensor output
 	 * @return true if the double is in the form of a freq
 	 */
-	private static boolean isOfTypeFreq(final double sensorValue) {
+	public static boolean isOfTypeFreq(final double sensorValue) {
 		return ((0.0 <= sensorValue) || (sensorValue <= 500.0));
 	}
 

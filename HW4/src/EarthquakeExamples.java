@@ -8,7 +8,6 @@ class EarthquakeExamples {
 	IEarthquakeProbs E;
 
 	private LinkedList<Double> data = getSensorData();
-	private LinkedList<MaxHzReport> out10 = getOutputData10();
 
 	EarthquakeExamples(final IEarthquakeProbs E) {
 		this.E = E;
@@ -16,14 +15,12 @@ class EarthquakeExamples {
 
 	@TestMethod
 	public boolean testEarthquake(final Tester t) {
-		return t.checkExpect(E.dailyMaxForMonth(data, 10),
-				out10);
+		return t.checkExpect(E.dailyMaxForMonth(getSensorData(), 10), getOutputData10());
 	}
 
 	@TestMethod
 	public boolean testEarthqueak2(final Tester t) {
-		return t.checkExpect(E.dailyMaxForMonth(data, 5),
-				out10);
+		return t.checkExpect(E.dailyMaxForMonth(getSensorData(), 5), getOutputData5());
 	}
 
 	/**
@@ -71,4 +68,21 @@ class EarthquakeExamples {
 		return data;
 	}
 
+	@TestMethod
+	// TODO remove this
+	public boolean testIsOfTypeDate(Tester t) {
+		return t.checkExpect(Earthquake2.isOfTypeDate(20150723.0));
+	}
+
+	@TestMethod
+	//TODO remove this
+	public boolean testDateOf(Tester t) {
+		return t.checkExpect(EarthquakeReportsByMonth.monthOfDate(20150623.0) == 06);
+	}
+
+	@TestMethod
+	//TODO remove this
+	public boolean testDateOf2(Tester t) {
+		return t.checkExpect(EarthquakeReportsByMonth.monthOfDate(20151225.0) == 12);
+	}
 }

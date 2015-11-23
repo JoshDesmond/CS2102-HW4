@@ -12,4 +12,9 @@ class MaxHzReport {
 		this.day = day;
 		this.maxReading = maxread;
 	}
+
+	@Override
+	public String toString() {
+		return "MaxHzReport [day=" + day + ", maxReading=" + maxReading + "]";
+	}
 }

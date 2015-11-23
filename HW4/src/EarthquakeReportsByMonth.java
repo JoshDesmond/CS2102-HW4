@@ -1,6 +1,5 @@
 import java.util.HashMap;
 import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Map representing an indexed version of MaxHzReports
@@ -17,13 +16,32 @@ HashMap<Integer, LinkedList<MaxHzReport>> {
 
 	/**
 	 * Processes the given dailyData list, and puts that data into this Map.
-	 * Assumes this map was created using {@link instantiateMap()}
+	 * Assumes this map was created using {@link instantiateMap()}. Destroys the
+	 * given list.
 	 * 
 	 * @param dailyData
 	 *            LinkedList in the form of: {yyyymmdd, n1, n2, n3... }.
 	 */
-	public void processDailyData(List<Double> dailyData) {
-		// TODO
+	public void processDailyData(LinkedList<Double> dailyData) {
+		// Parse first value
+		double dateDouble = dailyData.pop();
+		int day = dayOfDate(dateDouble);
+		int month = monthOfDate(dateDouble);
+
+		// Find best
+		double maxRead = 0.0;
+		for (double read : dailyData) {
+			if (read > maxRead) {
+				maxRead = read;
+			}
+		}
+
+		// Add maxReport to list
+		MaxHzReport maxReport = new MaxHzReport(day, maxRead);
+		if (!this.containsKey(month)) {
+			throw new IllegalStateException(String.format("Map doesn't contain the given month (or key) %s", month));
+		}
+		this.get(month).add(maxReport);
 	}
 
 	// Builds map of integer -> list<report>
@@ -36,7 +54,24 @@ HashMap<Integer, LinkedList<MaxHzReport>> {
 		return map;
 	}
 
-	private int monthOfDate(final Double d) {
-		return (int) ((d % 10000) - (d % 100));
+	/**
+	 * Converts a double in the form yyyymmdd to a integer representing month
+	 */
+	public static int monthOfDate(final Double d) {
+		return (int) ((d % 10000) - (d % 100))/100;
+	}
+
+	/**
+	 * Converts a double in the form yyyymmdd to a integer representing day
+	 */
+	public static int dayOfDate(final Double dataValue) {
+		return (int) (dataValue % 100);
+	}
+
+	@Override
+	public String toString() {
+		return "EarthquakeReportsByMonth ["
+				+ (super.toString() != null ? "toString()=" + super.toString()
+						: "") + "]";
 	}
 }
