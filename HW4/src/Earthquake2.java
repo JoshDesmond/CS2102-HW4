@@ -20,7 +20,6 @@ class Earthquake2 implements IEarthquakeProbs {
 
 		EarthquakeReportsByMonth reportsByMonth = convertToReportsByMonthMap(data);
 
-		System.out.println(reportsByMonth.toString());
 		return reportsByMonth.get(month);
 	}
 
