@@ -39,12 +39,18 @@ HashMap<Integer, LinkedList<MaxHzReport>> {
 		// Add maxReport to list
 		MaxHzReport maxReport = new MaxHzReport(day, maxRead);
 		if (!this.containsKey(month)) {
-			throw new IllegalStateException(String.format("Map doesn't contain the given month (or key) %s", month));
+			throw new IllegalStateException(String.format(
+					"Map doesn't contain the given month (or key) %s", month));
 		}
 		this.get(month).add(maxReport);
 	}
 
-	// Builds map of integer -> list<report>
+	/**
+	 * instantiates EarthquakeReportsByMonth with each month already having an
+	 * empty LinkedList assigned to it.
+	 * 
+	 * @return new EarthquakeReportsByMonth
+	 */
 	public static EarthquakeReportsByMonth instantiateMap() {
 		final EarthquakeReportsByMonth map = new EarthquakeReportsByMonth(12);
 		for (int i = 1; i <= 12; i++) {
@@ -57,14 +63,14 @@ HashMap<Integer, LinkedList<MaxHzReport>> {
 	/**
 	 * Converts a double in the form yyyymmdd to a integer representing month
 	 */
-	public static int monthOfDate(final Double d) {
-		return (int) ((d % 10000) - (d % 100))/100;
+	private static int monthOfDate(final Double d) {
+		return (int) ((d % 10000) - (d % 100)) / 100;
 	}
 
 	/**
 	 * Converts a double in the form yyyymmdd to a integer representing day
 	 */
-	public static int dayOfDate(final Double dataValue) {
+	private static int dayOfDate(final Double dataValue) {
 		return (int) (dataValue % 100);
 	}
 

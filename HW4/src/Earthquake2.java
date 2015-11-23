@@ -90,7 +90,7 @@ class Earthquake2 implements IEarthquakeProbs {
 	 *            double found in the sensor output
 	 * @return true if the double is in the form yyyymmdd
 	 */
-	public static boolean isOfTypeDate(final Double sensorValue) {
+	private static boolean isOfTypeDate(final Double sensorValue) {
 
 		if (sensorValue % 1 != 0)
 			return false;
@@ -114,7 +114,7 @@ class Earthquake2 implements IEarthquakeProbs {
 	 *            double found in the sensor output
 	 * @return true if the double is in the form of a freq
 	 */
-	public static boolean isOfTypeFreq(final double sensorValue) {
+	private static boolean isOfTypeFreq(final double sensorValue) {
 		return ((0.0 <= sensorValue) || (sensorValue <= 500.0));
 	}
 
