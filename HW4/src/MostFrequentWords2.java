@@ -6,6 +6,7 @@ class MostFrequentWords2 implements IFreqWordsProbs {
   MostFrequentWords2(){}
   // single pass
   public LinkedList<String> frequentWords(LinkedList<String> words) {
+    // store temporary string and frequency counts
     String maxString = "";
     int maxCount = 0;
 
@@ -17,18 +18,20 @@ class MostFrequentWords2 implements IFreqWordsProbs {
 
     String curString = "";
     int curCount = 0;
+    // sort list in alphabetic order
     words.sort(String::compareTo);
     for(String s : words)
     {
+      // any mismatch signals the end of the current series of words
       if(!s.equals(curString))
       {
-        if(curCount > minCount || (curCount == minCount && curString.length() < minString.length()))
+        // shift down words with lower counts
+        if(isLarger(curCount, minCount,curString.length(), minString.length()))
         {
           minCount = curCount;
           minString = curString;
         }
-
-        if(curCount> medCount || (curCount == medCount && curString.length() < medString.length()))
+        if(isLarger(curCount,medCount,curString.length(),medString.length()))
         {
           minCount = medCount;
           minString = medString;
@@ -36,8 +39,7 @@ class MostFrequentWords2 implements IFreqWordsProbs {
           medString = curString;
           medCount = curCount;
         }
-
-        if(curCount> maxCount || (curCount == maxCount && curString.length() < maxString.length()))
+        if(isLarger(curCount,maxCount,curString.length(),maxString.length()))
         {
 
 
@@ -52,15 +54,16 @@ class MostFrequentWords2 implements IFreqWordsProbs {
 
       }
       else
-        curCount +=1;
+        curCount +=1; // increase the counter for the current series of words by one
     }
-    if(curCount > minCount || (curCount == minCount && curString.length() < minString.length()))
+    //add the last element held
+    if(isLarger(curCount,minCount,curString.length(), minString.length()))
     {
       minCount = curCount;
       minString = curString;
     }
 
-    if(curCount> medCount || (curCount == medCount && curString.length() < medString.length()))
+    if(isLarger(curCount, medCount,curString.length(), medString.length()))
     {
       minCount = medCount;
       minString = medString;
@@ -69,7 +72,7 @@ class MostFrequentWords2 implements IFreqWordsProbs {
       medCount = curCount;
     }
 
-    if(curCount> maxCount || (curCount == maxCount && curString.length() < maxString.length()))
+    if(isLarger(curCount, maxCount,curString.length(),maxString.length()))
     {
 
 
@@ -81,5 +84,10 @@ class MostFrequentWords2 implements IFreqWordsProbs {
     }
 
   return new LinkedList<String>(Arrays.asList(maxString, medString,minString));
+  }
+  // method to do comparison for the current count against min med and max counts
+  boolean isLarger(int current, int compare, int lengthCurrent, int lengthCompare)
+  {
+      return current > compare || (current == compare && lengthCurrent < lengthCompare);
   }
 }
