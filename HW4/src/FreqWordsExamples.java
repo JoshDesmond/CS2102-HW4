@@ -11,12 +11,13 @@ class FreqWordsExamples {
   FreqWordsExamples(IFreqWordsProbs F) {
     this.F = F;
   }
-  
+  // test unique occurrences
   boolean testSimple (Tester t) {
-    LinkedList<String>  test = new LinkedList<String>(Arrays.asList("1", "2","2","3","3","3","4","4","4","4"));
+    LinkedList<String>  test = new LinkedList<String>(Arrays.asList("1","4","4","4","4", "2","2","3","3","3"));
     LinkedList<String>  answers = new LinkedList<String>(Arrays.asList("4", "3", "2"));
     return t.checkExpect(F.frequentWords(test), answers);
   }
+  // test different lengths and same frequency
   boolean testSameNumber (Tester t)
   {
     LinkedList<String>  test = new LinkedList<String>(Arrays.asList("1","22","333","4444"));
