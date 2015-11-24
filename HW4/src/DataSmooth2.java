@@ -4,17 +4,19 @@ import java.util.LinkedList;
 class DataSmooth2 implements IDataSmoothProbs {
     DataSmooth2() {
     }
-
+    // gives back a list of smoothed data
     public LinkedList<Double> dataSmooth(LinkedList<PHR> phrs) {
+       // create list of triples
         LinkedList<TripleNum> triples = new LinkedList<TripleNum>();
         toTriples(phrs, triples);
         LinkedList<Double> average = new LinkedList<>();
+        // convert list of triples to their averages
         for (TripleNum t : triples) {
             average.add(t.average());
         }
         return average;
     }
-
+    // conversts list of phrs to list of TripleNum
     private void toTriples(LinkedList<PHR> phrs,
             LinkedList<TripleNum> triples) {
         for (int i = 0; i < phrs.size(); i++) {
@@ -31,7 +33,10 @@ class DataSmooth2 implements IDataSmoothProbs {
         }
     }
 
-    class TripleNum {
+    /**
+     * private class to hold three consecutive nubmers
+     */
+    private class TripleNum {
         int one;
         int two;
         int three;
@@ -42,6 +47,10 @@ class DataSmooth2 implements IDataSmoothProbs {
             three = c;
         }
 
+        /**
+         * gives the average of the three held numbers
+         * @return
+         */
         Double average() {
             return ((one + two + three) / 3.);
         }
