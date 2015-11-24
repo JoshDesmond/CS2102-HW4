@@ -19,7 +19,19 @@ class DataSmoothExamples {
 
         LinkedList<Double> answers = getOutputData();
         return t.checkExpect(D.dataSmooth(phrs), answers);
+    }
 
+    @TestMethod
+    public boolean testZeroesInput(Tester t) {
+        // List of four items, each with hr of 0.
+        LinkedList<PHR> phrs = new LinkedList<PHR>(
+                Arrays.asList(new PHR("1", 3, 3, 0), new PHR("1", 3, 3, 0),
+                        new PHR("1", 3, 3, 0), new PHR("1", 3, 3, 0)));
+
+        LinkedList<Double> answers = new LinkedList<Double>(
+                Arrays.asList(0d, 0d, 0d, 0d));
+
+        return t.checkExpect(D.dataSmooth(phrs), answers);
     }
 
     @TestMethod
@@ -55,12 +67,11 @@ class DataSmoothExamples {
     private LinkedList<Double> getOutputData() {
      // @formatter:off
         return new LinkedList<Double>(Arrays.asList(
-                new Double(95),
-                new Double((95 + 102 + 98) / 3.),
-                new Double(96),
-                new Double(97),
-                new Double(105)
-                ));
+                95.,
+                ((95 + 102 + 98) / 3.),
+                96.,
+                97.,
+                105.));
      // @formatter:on
     }
 
@@ -68,11 +79,11 @@ class DataSmoothExamples {
     private LinkedList<PHR> getInputData() {
      // @formatter:off
         return new LinkedList<PHR>(Arrays.asList(
-                new PHR("1", 3,3, new Integer(95)),
-                new PHR("1", 3,3, new Integer(102)),
-                new PHR("1", 3,3, new Integer(98)),
-                new PHR("1", 3,3, new Integer(88)),
-                new PHR("1", 3,3, new Integer(105))
+                new PHR("1", 3,3,  95),
+                new PHR("1", 3,3,  102),
+                new PHR("1", 3,3,  98),
+                new PHR("1", 3,3,  88),
+                new PHR("1", 3,3,  105)
                 ));
      // @formatter:on
     }

@@ -64,6 +64,7 @@ class Earthquake2 implements IEarthquakeProbs {
         LinkedList<LinkedList<Double>> splitList = new LinkedList<LinkedList<Double>>();
         LinkedList<Double> currentList = new LinkedList<Double>();
 
+        // Remove just the first date.
         currentList.add(sensorData.pop());
 
         while (!sensorData.isEmpty()) {
