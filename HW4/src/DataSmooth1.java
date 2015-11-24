@@ -7,22 +7,36 @@ class DataSmooth1 implements IDataSmoothProbs {
     }
 
     public LinkedList<Double> dataSmooth(LinkedList<PHR> phrs) {
-        LinkedList<Double> original = mapToHeartRates(phrs);
+        LinkedList<Double> originalList = mapToHeartRates(phrs);
 
+        // Check if size is less than three.
         if (phrs.size() <= 2) {
-            return original;
+            return originalList;
         }
 
-        LinkedList<Double> changes = new LinkedList<>();
-        changes.add(new Double(original.get(0)));
-        for (int i = 1; i < original.size() - 1; i++) {
-            changes.add(i, average(original.get(i - 1), original.get(i),
-                    original.get(i + 1)));
+        // Instantiate modifiedList
+        LinkedList<Double> modifiedList = new LinkedList<>();
+        // Add first value
+        modifiedList.add(new Double(originalList.get(0)));
+
+        for (int index = 1; index < originalList.size() - 1; index++) {
+            // Extract valPrev, Curr, and Next.
+            final Double valPrev = originalList.get(index - 1);
+            final Double valCurr = originalList.get(index);
+            final Double valNext = originalList.get(index + 1);
+
+            // Add to modifiedList the average of three values.
+            modifiedList.add(index, average(valPrev, valCurr, valNext));
         }
-        changes.add(new Double(original.get(original.size() - 1)));
-        return changes;
+
+        // Add last value.
+        modifiedList.add(originalList.get(originalList.size() - 1));
+        return modifiedList;
     }
 
+    /**
+     * @return average of three doubles
+     */
     public Double average(double double1, double double2, double double3) {
         return (double1 + double2 + double3) / 3.;
     }
