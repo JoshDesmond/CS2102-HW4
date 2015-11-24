@@ -10,6 +10,8 @@ class Earthquake1 implements IEarthquakeProbs {
     @Override
     public LinkedList<MaxHzReport> dailyMaxForMonth(LinkedList<Double> data,
             int month) {
+        // this first line of code ensure input isn't destroyed
+        data = (LinkedList<Double>) data.clone();
 
         // First split data.
         LinkedList<LinkedList<Double>> splitData = splitLists(data);
