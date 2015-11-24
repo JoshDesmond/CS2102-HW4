@@ -1,6 +1,7 @@
 import java.util.Arrays;
 import java.util.LinkedList;
 
+import tester.TestMethod;
 import tester.Tester;
 
 class BMIExamples {
@@ -36,6 +37,18 @@ class BMIExamples {
         // then modify data, to ensure no modifying any of given lists.
         in.remove(p);
         out.over.remove("p");
+
+        return t.checkExpect(B.bmiReport(in), out);
+    }
+
+    @TestMethod
+    /**
+     * Checks that BMI works with an empty list.
+     */
+    public boolean testBMIEmpty(Tester t) {
+        LinkedList<PHR> in = new LinkedList<PHR>();
+        LinkedList<String> newList = new LinkedList<String>();
+        BMISummary out = new BMISummary(newList, newList, newList, newList);
 
         return t.checkExpect(B.bmiReport(in), out);
     }
