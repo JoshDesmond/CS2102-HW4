@@ -1,0 +1,4 @@
+Earthquake 1 first splits data at all dates, filters lists of correct month, and converts to MaxHzReads
+Earthquake 2 parses all data into a map of <month, list<HzReport>>, then retrieves list from given month.
+
+I dislike solution two because creating a data structure to index all reads is pretty ugly in its current form. There's no real reason to be mapping from month to data, since that structure is only optimized if you want to retrieve data by month (doesn't work if you want by year, or by day). I really like going about the process by first splitting it into lists of lists, as a list of list could better be refactored into an object representing a single days events. Furthermore, since solution one is using filter/map, it lends itself more easily to optimization techniques which scale when the size of data get massive.
