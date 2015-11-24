@@ -20,39 +20,32 @@ class Earthquake1 implements IEarthquakeProbs {
         splitData = splitData.stream().filter(getPredicate(month))
                 .collect(Collectors.toCollection(LinkedList::new));
 
-        // Then convert these dailyDataLists into MaxHzReads.
-        Function<LinkedList<Double>, MaxHzReport> mapFunction = getMapFunction();
-        return splitData.stream().map(mapFunction)
+        return splitData.stream().map(this.mapFunction)
                 .collect(Collectors.toCollection(LinkedList::new));
     }
 
     /**
-     * Returns a function which maps a dailyDataList into a MaxHzReads.
-     * DailyDataLists are in the form: <i>{yyyymmdd, val1, val2, ... }</i>.
-     * Current implementation has the side effect of destroying the given list
-     * it's working on.
+     * A function which maps a dailyDataList into a MaxHzReads. DailyDataLists
+     * are in the form: <i>{yyyymmdd, val1, val2, ... }</i>. Current
+     * implementation has the side effect of destroying the given list it's
+     * working on.
      * 
      * @return Function mapping dailyData to MaxHzReport
      */
-    private static Function<LinkedList<Double>, MaxHzReport> getMapFunction() {
-        // Define function using -> notation.
-        Function<LinkedList<Double>, MaxHzReport> function = list -> {
-            double dateDouble = list.pop();
-            int day = EarthquakeUtils.dayOfDate(dateDouble);
+    private Function<LinkedList<Double>, MaxHzReport> mapFunction = (list -> {
+        double dateDouble = list.pop();
+        int day = EarthquakeUtils.dayOfDate(dateDouble);
 
-            // Find best
-            double maxRead = 0.0;
-            for (double read : list) {
-                if (read > maxRead) {
-                    maxRead = read;
-                }
+        // Find best
+        double maxRead = 0.0;
+        for (double read : list) {
+            if (read > maxRead) {
+                maxRead = read;
             }
+        }
 
-            return new MaxHzReport(day, maxRead);
-        };
-
-        return function;
-    }
+        return new MaxHzReport(day, maxRead);
+    });
 
     /**
      * Converts raw sensor data into split data
@@ -76,6 +69,7 @@ class Earthquake1 implements IEarthquakeProbs {
                 splitList.add(currentList);
                 currentList = new LinkedList<Double>();
             } else if (!EarthquakeUtils.isOfTypeFreq(peek)) {
+                // TODO refactor this to another loop
                 throw new IllegalArgumentException(String
                         .format("Given argument within sensor data list was neither of type "
                                 + "frequency nor date: %s", peek));
