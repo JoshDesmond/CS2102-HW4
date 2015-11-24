@@ -7,9 +7,16 @@ class Earthquake1 implements IEarthquakeProbs {
 	Earthquake1() {
 	}
 
-	@Override
-	public LinkedList<MaxHzReport> dailyMaxForMonth(LinkedList<Double> data,
-			int month) {
+	private static Function<? super LinkedList<Double>, MaxHzReport> MAP_FUNCTION =
+			(list -> {
+				for (double d : list) {
+
+				}
+			})
+
+			@Override
+			public LinkedList<MaxHzReport> dailyMaxForMonth(LinkedList<Double> data,
+					int month) {
 
 		// First split data.
 		LinkedList<LinkedList<Double>> splitData = splitLists(data);

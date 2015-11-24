@@ -66,11 +66,11 @@ class Earthquake2 implements IEarthquakeProbs {
 		while (!sensorData.isEmpty()) {
 			Double peek = sensorData.peek();
 
-			if (isOfTypeDate(peek)) {
+			if (EarthquakeUtils.isOfTypeDate(peek)) {
 				// Then terminate currentList and start anew.
 				splitList.add(currentList);
 				currentList = new LinkedList<Double>();
-			} else if (!isOfTypeFreq(peek)) {
+			} else if (!EarthquakeUtils.isOfTypeFreq(peek)) {
 				throw new IllegalArgumentException(String.format(
 						"Given argument within sensor data list was neither of type "
 								+ "frequency nor date: %s", peek));
@@ -83,39 +83,5 @@ class Earthquake2 implements IEarthquakeProbs {
 		return splitList;
 	}
 
-	/**
-	 * Parses given double and determines if it's a y-m-d string
-	 * 
-	 * @param sensorValue
-	 *            double found in the sensor output
-	 * @return true if the double is in the form yyyymmdd
-	 */
-	private static boolean isOfTypeDate(final Double sensorValue) {
-
-		if (sensorValue % 1 != 0)
-			return false;
-
-		if (19000000 > sensorValue || sensorValue > 100000000) {
-			// Assumes year will never be before 1900...
-			return false;
-		}
-
-		if (sensorValue % 100 > 33)
-			return false; // Check if the dd value is too big.
-
-		return true;
-	}
-
-	/**
-	 * Determines if the given double is a valid vibration freq between 0 and
-	 * 500.
-	 * 
-	 * @param sensorValue
-	 *            double found in the sensor output
-	 * @return true if the double is in the form of a freq
-	 */
-	private static boolean isOfTypeFreq(final double sensorValue) {
-		return ((0.0 <= sensorValue) || (sensorValue <= 500.0));
-	}
 
 }

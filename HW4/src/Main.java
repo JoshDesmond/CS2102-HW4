@@ -10,9 +10,9 @@ class Main {
 		/*Tester.run (new BMIExamples (new BMI1())) ;
 		Tester.run (new BMIExamples (new BMI2())) ;
 		Tester.run (new BMIExamples (new BMI3())) ;
-		Tester.run (new BMIExamples (new BMI4())) ;
+		Tester.run (new BMIExamples (new BMI4())) ; */
 		Tester.run (new EarthquakeExamples (new Earthquake1())) ;
-		Tester.run (new EarthquakeExamples (new Earthquake2())) ;*/
+		Tester.run (new EarthquakeExamples (new Earthquake2())) ;/*
 		Tester.run (new DataSmoothExamples (new DataSmooth1())) ;
 		Tester.run (new DataSmoothExamples (new DataSmooth2())) ;/*
 		Tester.run (new FreqWordsExamples (new MostFrequentWords1())) ;

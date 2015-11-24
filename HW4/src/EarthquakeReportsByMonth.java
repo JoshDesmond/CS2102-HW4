@@ -6,6 +6,7 @@ import java.util.LinkedList;
  */
 public class EarthquakeReportsByMonth extends
 HashMap<Integer, LinkedList<MaxHzReport>> {
+	private static final long serialVersionUID = -2427032186563414752L;
 
 	/**
 	 * {@link HashMap#HashMap(int)}
