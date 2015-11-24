@@ -1,8 +1,8 @@
 import java.util.LinkedList;
 import java.util.stream.Collectors;
 
-class BMI3 implements IBMIProbs {
-	BMI3(){}
+class BMI2 implements IBMIProbs {
+	BMI2(){}
 
 	//using a filter
 	@Override

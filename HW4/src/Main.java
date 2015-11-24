@@ -9,7 +9,7 @@ class Main {
     // Comment out lines for any examples that you don't want to run.
     public static void main(final String[] args) {
         Tester.run(new BMIExamples(new BMI1()));
-        Tester.run(new BMIExamples(new BMI3()));
+        Tester.run(new BMIExamples(new BMI2()));
         Tester.run(new EarthquakeExamples(new Earthquake1()));
         Tester.run(new EarthquakeExamples(new Earthquake2()));
         Tester.run(new DataSmoothExamples(new DataSmooth1()));
